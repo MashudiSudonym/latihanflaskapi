@@ -11,8 +11,8 @@ app = Flask(__name__)
 
 try:
 	app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/postgres"
-except Exception as e:
-	raise e
+except:
+	pass
 else:
 	app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://mbboicqbhnuvzq:8235e39b10e9e292851414ae25448bac56e4b87700d58da3027c632c335b54f6@ec2-23-21-204-166.compute-1.amazonaws.com:5432/d45dq332s1jbto"
 
