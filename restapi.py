@@ -4,10 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-try:
-	app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://mbboicqbhnuvzq:8235e39b10e9e292851414ae25448bac56e4b87700d58da3027c632c335b54f6@ec2-23-21-204-166.compute-1.amazonaws.com:5432/d45dq332s1jbto"
-except:
-	app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/postgres"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/postgres"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://mbboicqbhnuvzq:8235e39b10e9e292851414ae25448bac56e4b87700d58da3027c632c335b54f6@ec2-23-21-204-166.compute-1.amazonaws.com:5432/d45dq332s1jbto"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
@@ -33,15 +32,13 @@ class TugasApiList(Resource):
 		semuadata_all = []
 
 		for data in semuadata:
-			semuadata_all.append(
-					[
-						data.equip_id,
-						data.nama,
-						data.alamat,
-					]
-				)
+			semuadata_all.append({
+					'id': data.equip_id,
+					'nama': data.nama,
+					'alamat': data.alamat,
+				})
 
-		return jsonify({'data_nama': semuadata_all})
+		return jsonify(semuadata_all)
 
 	def post(self):
 		nama = request.get_json()['nama']
@@ -60,7 +57,7 @@ class TugasApiList(Resource):
 		data = Datanama.query.filter_by(equip_id=semuanamaId).first()
 
 		hasil = [data.nama, data.alamat]
-		return jsonify({'data_nama': hasil})
+		return jsonify(hasil)
 
 class TugasApi(Resource):
 	def get(self, datanamaId):
@@ -68,18 +65,16 @@ class TugasApi(Resource):
 		semuadata_byId = []
 
 		for data in semuadata:
-			semuadata_byId.append(
-					[
-						data.equip_id,
-						data.nama,
-						data.alamat,
-					]
-				)
+			semuadata_all.append({
+					'id': data.equip_id,
+					'nama': data.nama,
+					'alamat': data.alamat,
+				})
 
 		if len(semuadata_byId) == 0:
 			abort(404)
 
-		return jsonify({'data_nama': semuadata_byId})
+		return jsonify(semuadata_byId)
 
 	def put(self, datanamaId):
 		data = Datanama.query.filter_by(equip_id=datanamaId).first()
@@ -96,7 +91,7 @@ class TugasApi(Resource):
 		dataSemua = Datanama.query.filter_by(equip_id=semuanamaId).first()
 
 		hasil = [dataSemua.nama, dataSemua.alamat]
-		return jsonify({'data_nama': hasil})
+		return jsonify(hasil)
 
 	def delete(self, datanamaId):
 		data = Datanama.query.filter_by(equip_id=datanamaId).first()
