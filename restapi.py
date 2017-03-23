@@ -36,14 +36,14 @@ class TugasApiList(Resource):
 
 		for data in semuadata:
 			semuadata_all.append(
-					[
-						data.equip_id,
-						data.nama,
-						data.alamat,
-					]
+					{
+						"id": data.equip_id,
+						"nama": data.nama,
+						"alamat": data.alamat,
+					}
 				)
 
-		return jsonify({'data_nama': semuadata_all})
+		return jsonify(["data_nama": semuadata_all])
 
 	def post(self):
 		nama = request.get_json()['nama']
@@ -71,17 +71,17 @@ class TugasApi(Resource):
 
 		for data in semuadata:
 			semuadata_byId.append(
-					[
-						data.equip_id,
-						data.nama,
-						data.alamat,
-					]
+					{
+						"id": data.equip_id,
+						"nama": data.nama,
+						"alamat": data.alamat,
+					}
 				)
 
 		if len(semuadata_byId) == 0:
 			abort(404)
 
-		return jsonify({'data_nama': semuadata_byId})
+		return jsonify(["data_nama": semuadata_byId])
 
 	def put(self, datanamaId):
 		data = Datanama.query.filter_by(equip_id=datanamaId).first()
