@@ -5,11 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 try:
-	app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/postgres"
-except:
-	pass
-else:
 	app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://mbboicqbhnuvzq:8235e39b10e9e292851414ae25448bac56e4b87700d58da3027c632c335b54f6@ec2-23-21-204-166.compute-1.amazonaws.com:5432/d45dq332s1jbto"
+except:
+	app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/postgres"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
@@ -36,14 +34,14 @@ class TugasApiList(Resource):
 
 		for data in semuadata:
 			semuadata_all.append(
-					{
-						"id": data.equip_id,
-						"nama": data.nama,
-						"alamat": data.alamat,
-					}
+					[
+						data.equip_id,
+						data.nama,
+						data.alamat,
+					]
 				)
 
-		return jsonify(["data_nama": semuadata_all])
+		return jsonify({'data_nama': semuadata_all})
 
 	def post(self):
 		nama = request.get_json()['nama']
@@ -71,17 +69,17 @@ class TugasApi(Resource):
 
 		for data in semuadata:
 			semuadata_byId.append(
-					{
-						"id": data.equip_id,
-						"nama": data.nama,
-						"alamat": data.alamat,
-					}
+					[
+						data.equip_id,
+						data.nama,
+						data.alamat,
+					]
 				)
 
 		if len(semuadata_byId) == 0:
 			abort(404)
 
-		return jsonify(["data_nama": semuadata_byId])
+		return jsonify({'data_nama': semuadata_byId})
 
 	def put(self, datanamaId):
 		data = Datanama.query.filter_by(equip_id=datanamaId).first()
