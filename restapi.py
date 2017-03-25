@@ -38,7 +38,7 @@ class TugasApiList(Resource):
 					'alamat': data.alamat,
 				})
 
-		return jsonify(semuadata_all)
+		return jsonify({"result": semuadata_byId})
 
 	def post(self):
 		nama = request.get_json()['nama']
