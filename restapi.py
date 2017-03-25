@@ -74,7 +74,7 @@ class TugasApi(Resource):
 		if len(semuadata_byId) == 0:
 			abort(404)
 
-		return jsonify(semuadata_byId)
+		return jsonify({"result": semuadata_byId})
 
 	def put(self, datanamaId):
 		data = Datanama.query.filter_by(equip_id=datanamaId).first()
