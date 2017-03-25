@@ -42,10 +42,15 @@ class TugasApiList(Resource):
 
 class TugasApiPost(Resource):
 	def post(self):
-		nama = request.get_json()['nama']
-		alamat = request.get_json()['alamat']
+		parser = reqparse.RequestParser()
+		parser.add_argument('nama', type=str)
+		parser.add_argument('alamat', type=str)
+		args = parser.parse_args()
 
-		semuadata = Datanama(nama=nama, alamat=alamat)
+		nama = args['nama']
+		alamat = args['alamat']
+
+		semuadata = Datanama(nama, alamat)
 
 		try:
 			db.session.add(semuadata)
