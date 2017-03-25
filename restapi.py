@@ -65,7 +65,7 @@ class TugasApi(Resource):
 		semuadata_byId = []
 
 		for data in semuadata:
-			semuadata_all.append({
+			semuadata_byId.append({
 					'id': data.equip_id,
 					'nama': data.nama,
 					'alamat': data.alamat,
