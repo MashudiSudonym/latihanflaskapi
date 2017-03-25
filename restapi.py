@@ -40,6 +40,7 @@ class TugasApiList(Resource):
 
 		return jsonify({"result": semuadata_all})
 
+class TugasApiPost(Resource):
 	def post(self):
 		nama = request.get_json()['nama']
 		alamat = request.get_json()['alamat']
@@ -101,6 +102,7 @@ class TugasApi(Resource):
 		return "Data terhapus"
 
 api.add_resource(TugasApiList, '/api')
+api.add_resource(TugasApiPost, '/api/post')
 api.add_resource(TugasApi, '/api/<int:datanamaId>')
 
 if __name__ == '__main__':
